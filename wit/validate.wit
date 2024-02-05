@@ -1,0 +1,5 @@
+package local:main;
+
+world validate-world {
+  export validate: func(); 
+}
