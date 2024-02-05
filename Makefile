@@ -11,4 +11,4 @@ compile-javy-example:
 	       	--wit wit/validate.wit -n validate-world -o validate.wasm
 
 run-javy-example: 
-	wasmtime run --invoke validate validate.wasm
+	@echo '{"one": 1, "two": 2}' | wasmtime run --invoke validate validate.wasm
