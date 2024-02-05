@@ -12,3 +12,10 @@ compile-javy-example:
 
 run-javy-example: 
 	@echo '{"one": 1, "two": 2}' | wasmtime run --invoke validate validate.wasm
+
+
+rollup:
+	npx rollup -c
+
+run-bundle:
+	node runner.js

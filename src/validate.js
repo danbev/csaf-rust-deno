@@ -1,3 +1,8 @@
+import validateStrict from '@secvisogram/csaf-validator-lib/validateStrict.js';
+import * as mandatory from '@secvisogram/csaf-validator-lib/mandatoryTests.js';
+import { optionalTest_6_2_1 } from '@secvisogram/csaf-validator-lib/optionalTests.js';
+import { csaf_2_0_strict } from '@secvisogram/csaf-validator-lib/schemaTests.js'
+
 function readInput() {
     const chunkSize = 1024;
     const inputChunks = [];
