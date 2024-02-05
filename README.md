@@ -48,5 +48,29 @@ Loaded validate.js module!
 validate...
 ```
 
+### Create a bundle of the JavaScript
+```console
+$ make rollup
+```
+And we can try this out using Node just to make sure it works:
+```console
+$ make run-bundle
+$ make run-bundle 
+node runner.js
+validate...document:  {}
+{
+  tests: [
+    {
+      isValid: false,
+      errors: [Array],
+      warnings: [],
+      infos: [],
+      name: 'csaf_2_0_strict'
+    },
+    ...
+   ]
+}
+```
+So can we use this bundle.js in combination with Javy?
 
 [javy]: https://github.com/bytecodealliance/javy
