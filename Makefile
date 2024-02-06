@@ -1,21 +1,25 @@
+JAVY_HOME := ~/work/javascript/javy/
+
 init: 
 	npm install
 
 # Run deno example
 run-deno-example: 
-	deno run example.mjs
+	deno run src/validate.mjs
 
-JAVY_HOME := ~/work/javascript/javy/
+# Example to try out the javy compiler
 compile-javy-example: 
-	$(JAVY_HOME)/target/release/javy compile src/validate.js \
-	       	--wit wit/validate.wit -n validate-world -o validate.wasm
+	$(JAVY_HOME)/target/release/javy compile src/javy-example.js \
+	--wit wit/validate.wit -n validate-world -o javy-example.wasm
 
-run-javy-example: 
-	@echo '{"one": 1, "two": 2}' | wasmtime run --invoke validate validate.wasm
+run-javy-example-wasm:
+	@echo '{"one": 1, "two": 2}' | wasmtime run --invoke validate javy-example.wasm
 
+# Try to rollup validate.mjs
+rollup-validate:
+	npx rollup -c rollup.val.config.js
 
-rollup:
-	npx rollup -c
-
-run-bundle:
-	node runner.js
+# Try to compile validate.mjs
+compile-validate-bundle:
+	$(JAVY_HOME)/target/release/javy compile validate-bundle.mjs \
+	--wit wit/validate.wit -n validate-world -o validate.wasm

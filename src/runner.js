@@ -1,4 +1,4 @@
-import {validate} from './bundle.js';
+import {validate} from '../example-bundle.js';
 
 async function validateDocument() {
     const documentToValidate = {};

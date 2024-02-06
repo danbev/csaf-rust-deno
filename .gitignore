@@ -2,5 +2,7 @@ target
 node_modules
 *.wasm
 *.vi
-bundle.js
-bundle.js.map
+example-bundle.js
+example-bundle.js.map
+validate-bundle.js
+validate-bundle.js.map

@@ -36,41 +36,50 @@ $ make
 First we need to compile the JavaScript to WebAssembly.
 ```console
 $ make compile-javy-example 
-~/work/javascript/javy//target/release/javy compile src/validate.js \
-       	--wit wit/validate.wit -n validate-world -o validate.wasm
+~/work/javascript/javy//target/release/javy compile src/javy-example.js \
+--wit wit/validate.wit -n validate-world -o javy-example.wasm
 ```
-This will produce a `validate.wasm` file which can then be used with a wasm
+This will produce a `javy-example.wasm` file which can then be used with a wasm
 runtime, for example wasmtime:
 ```console
-$ make run-javy-example 
-wasmtime run --invoke validate validate.wasm
-Loaded validate.js module!
-validate...
+$ make run-javy-example-wasm 
+[validate] input:  {"one":1,"two":2}
+{"valid":true}
 ```
 
 ### Create a bundle of the JavaScript
+Now, lets try to create a bundle of the JavaScript using Rollup for the
+JavaScript code in [validate.mjs](src/validate.mjs):
 ```console
-$ make rollup
+$ make rollup-validate 
+npx rollup -c rollup.val.config.js
+
+src/validate.mjs → validate-bundle.js...
+(!) Circular dependencies
+node_modules/semver/classes/comparator.js -> node_modules/semver/classes/range.js -> node_modules/semver/classes/comparator.js
+polyfill-node._stream_duplex.js -> polyfill-node._stream_readable.js -> polyfill-node._stream_duplex.js
+polyfill-node._stream_duplex.js -> polyfill-node._stream_writable.js -> polyfill-node._stream_duplex.js
+created validate-bundle.js in 10.4s
 ```
-And we can try this out using Node just to make sure it works:
+Next we can try to compile 
 ```console
-$ make run-bundle
-$ make run-bundle 
-node runner.js
-validate...document:  {}
-{
-  tests: [
-    {
-      isValid: false,
-      errors: [Array],
-      warnings: [],
-      infos: [],
-      name: 'csaf_2_0_strict'
-    },
-    ...
-   ]
-}
+$ make compile-validate-bundle 
+~/work/javascript/javy//target/release/javy compile validate-bundle.mjs \
+--wit wit/validate.wit -n validate-world -o validate.wasm
+thread '<unnamed>' panicked at crates/core/src/main.rs:27:10:
+called `Result::unwrap()` on an `Err` value: Uncaught ReferenceError: could not load module 'stream/web'
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+Error: JS compilation failed
+make: *** [Makefile:24: compile-validate-bundle] Error 1
 ```
-So can we use this bundle.js in combination with Javy?
+__wip__
+
+### Streams
+
+https://www.npmjs.com/package/rollup-plugin-polyfill-node
+
+
 
 [javy]: https://github.com/bytecodealliance/javy
+
