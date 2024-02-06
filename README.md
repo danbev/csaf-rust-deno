@@ -73,13 +73,11 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 Error: JS compilation failed
 make: *** [Makefile:24: compile-validate-bundle] Error 1
 ```
-__wip__
 
-### Streams
-
-https://www.npmjs.com/package/rollup-plugin-polyfill-node
-
-
+I looks like using Javy to compile the JavaScript to WebAssembly is not going
+to work as it uses some Node.js specific modules which are not supported by
+Javy:
+https://github.com/bytecodealliance/javy/issues/265
 
 [javy]: https://github.com/bytecodealliance/javy
 
